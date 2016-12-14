@@ -1,0 +1,26 @@
+.nav-list {
+    margin: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    flex-grow: 1;
+}
+
+.nav-item:hover {
+    background-color: azure;
+}
+
+.nav-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 5vh;
+    width: 100%;
+}
+

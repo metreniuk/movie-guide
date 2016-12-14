@@ -1,0 +1,23 @@
+.collection-list {
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.collection-item {
+    display: flex;
+    flex: 1 33%;
+}
+
+.collection-heading {
+    text-align: center;
+}
+
+.collection-movie {
+    width: 100%;
+}
+
+.collection-movie-link {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+}

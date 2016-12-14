@@ -1,0 +1,32 @@
+
+.discover {
+    margin: 0 80px;
+}
+
+.search-bar {
+    display: flex;
+    margin: 50px 0;
+}
+
+.search-field {
+    margin-right: 100px;
+}
+
+.search-filter {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
+
+.movie-item {
+    margin-right: 10px;
+    width: 190px;
+}
+
+.movie-poster {
+    height: 274px;
+}
+
+.movie-title {
+    text-align: center;
+}

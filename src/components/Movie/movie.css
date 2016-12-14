@@ -1,0 +1,42 @@
+.movie-wrapper {
+    margin: 50px 40vw;
+}
+
+.movie {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+}
+
+.movie-title {
+    text-align: center;
+}
+
+.movie-genre {
+    display: flex;
+}
+
+.movie-genre-label {
+    display: flex;
+    flex: 1 20%;
+    justify-content: center;
+}
+
+.movie-genre-list {
+    display: flex;
+    flex: 1 67%;
+    justify-content: center;
+}
+
+.movie-genre-link {
+    margin-right: 10px;
+}
+
+.movie-description {
+    margin-top: 30px;
+}

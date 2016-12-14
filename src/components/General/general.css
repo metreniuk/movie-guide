@@ -1,0 +1,12 @@
+.box-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+.box-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
