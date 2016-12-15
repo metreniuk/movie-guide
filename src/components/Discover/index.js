@@ -1,53 +1,100 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import '../General/general.css';
 import './discover.css';
+import { connect } from 'react-redux';
+import { fetchByTitle, fetchByGenre, fetchByYear, fetchByPerson, setSearchFilter, fetchGenres } from './DiscoverActions';
 
 class Discover extends Component {
-  constructor() {
-    super();
-    this.state = { movies: [] }
+
+  onFetchByGenreName(name) {
+    let [{ id }] = this.props.discoverGenres.filter(genre => genre.name === name.toLowerCase());
+    this.props.onFetchByGenreId(id);
+  }
+
+  onFilterClick(filter) {
+    this.props.onSetFilter(filter);
+  }
+
+  onSearchClick(query) {
+    switch (this.props.discoverFilter) {
+      case 'title':
+        this.props.onFetchByTitle(query);
+        break;
+      case 'genre':
+        this.onFetchByGenreName(query);
+        break;
+      case 'year':
+        this.props.onFetchByYear(query);
+        break;
+      case 'person':
+        this.props.onFetchByPerson(query);
+        break;
+      default:
+        this.props.onFetchByTitle(query);
+    }
   }
 
   componentWillMount() {
-    fetch('https://api.themoviedb.org/3/list/1?api_key=4fca08f368f9ca63a21e4db9786b21a7&language=en-US')
-      .then(res => res.json())
-      .then(({items}) => (
-        this.setState({movies: items})
-      )).catch(e => e.message)
+    this.props.fetchGenres();
+    this.props.onSetFilter('title');
+    //on redirect to this page
+    setTimeout(() => {
+      if(this.props.location.query.genre) {
+        this.props.onSetFilter('genre');
+        console.log('hi')
+        this.onFetchByGenreName(this.props.location.query.genre);
+      }
+    }, 500)
   }
   render() {
     return (
       <div className="discover">
-        <SearchBar />
-        <MovieList movies={this.state.movies} />
+        <SearchBar onSearchClick={this.onSearchClick.bind(this)}
+          onFilterClick={this.onFilterClick.bind(this)}
+          discoverFilter={this.props.discoverFilter}
+        />
+        <MovieList movies={this.props.discoverResults} />
       </div>
     )
   }
 }
 
-const SearchBar = () => (
+const SearchBar = ({onSearchClick, onFilterClick, discoverFilter}) => (
   <div className="search-bar">
-    <SearchField />
-    <SearchFilter />
+    <SearchField onSearchClick={onSearchClick} />
+    <SearchFilter onFilterClick={onFilterClick} discoverFilter={discoverFilter}/>
   </div>
 );
 
-const SearchFilter = () => (
+const SearchFilter = ({ onFilterClick , discoverFilter}) => {
+  let filters = ['title', 'genre', 'year', 'person']
+  return (
   <div className="search-filter">
-    <div className="search-filter-item"><button className="search-filter-link">Title</button></div>
-    <div className="search-filter-item"><button className="search-filter-link">Genre</button></div>
-    <div className="search-filter-item"><button className="search-filter-link">Year</button></div>
-    <div className="search-filter-item"><button className="search-filter-link">Country</button></div>
+    {filters.map((filter) => {
+      return <FilterLink key={filter} filter={filter} onFilterClick={onFilterClick} isActive={discoverFilter === filter ? 'is-active': ''}/>
+    })}
   </div>
-);
+)};
 
-const SearchField = () => (
-  <div className="search-field" >
-    <input className="search-field-input" type="text" />
-    <button className="search-field-btn">Search</button>
+const FilterLink = ({filter, onFilterClick, isActive}) => (
+  <div className="search-filter-item">
+    <button
+      onClick={() => {
+        return onFilterClick(filter)
+      }}
+      className={`btn search-filter-link ${isActive}`}>{filter}</button>
   </div>
-);
+)
+
+const SearchField = ({onSearchClick}) => {
+  let searchInput;
+  return (
+    <div className="search-field">
+    <input className="input search-field-input" type="text" ref={input => searchInput = input}/>
+    <button className="btn search-field-btn" onClick={() => onSearchClick(searchInput.value)}>Search</button>
+  </div>
+  )
+};
 
 const MovieList = (props) => {
   let movies = props.movies ? props.movies : [];
@@ -70,4 +117,30 @@ MovieList.propTypes = {
 };
 
 
-export default Discover
+export default connect(
+  state => ({
+    discoverResults: state.discoverResults,
+    discoverFilter: state.discoverFilter,
+    discoverGenres: state.discoverGenres
+  }),
+  dispatch => ({
+    onFetchByTitle: (query) => {
+      dispatch(fetchByTitle(query))
+    },
+    onFetchByGenreId: (genreId) => {
+      dispatch(fetchByGenre(genreId))
+    },
+    onFetchByYear: (year) => {
+      dispatch(fetchByYear(year))
+    },
+    onFetchByPerson: (query) => {
+      dispatch(fetchByPerson(query))
+    },
+    onSetFilter: (filter) => {
+      dispatch(setSearchFilter(filter))
+    },
+    fetchGenres: () => {
+      dispatch(fetchGenres())
+    }
+  })
+)(Discover)

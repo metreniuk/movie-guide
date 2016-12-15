@@ -12,14 +12,19 @@
     margin-right: 100px;
 }
 
+.search-field-input {
+    margin-right: 20px;
+}
+
 .search-filter {
     display: flex;
     width: 300px;
     justify-content: space-between;
 }
 
+
 .movie-item {
-    margin-right: 10px;
+    margin: 10px;
     width: 190px;
 }
 

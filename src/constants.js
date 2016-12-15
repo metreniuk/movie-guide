@@ -1,0 +1,8 @@
+
+export const API_KEY = '4fca08f368f9ca63a21e4db9786b21a7';
+
+export const SET_SEARCH_FILTER = 'SET_SEARCH_FILTER';
+
+export const SHOW_SEARCH_RESULTS = 'SHOW_SEARCH_RESULTS';
+
+export const FETCH_GENRES = 'FETCH_GENRES';

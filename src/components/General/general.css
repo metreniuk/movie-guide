@@ -1,7 +1,7 @@
 .box-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-content: stretch;
 }
 
@@ -9,4 +9,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.btn {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: lightseagreen;
+    border: 1px solid lightseagreen;
+    cursor: pointer;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:hover, .btn.is-active {
+    background-color: lightseagreen;
+    color: #fff;
+}
+
+.input {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid lightseagreen;
 }
