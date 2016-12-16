@@ -8,11 +8,30 @@
     flex: 1 33%;
 }
 
-.collection-heading {
+.collection-item .wrapper {
+    width: 65%;
     text-align: center;
 }
 
-.collection-movie {
+.collection-heading {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 10px;
+    background-color: darkslategray;
+    color: #ffffff;
+    width: 100%;
+}
+
+.collection-movie-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid darkslategray;
+}
+
+.collection-movie-item {
     width: 100%;
 }
 
@@ -20,4 +39,12 @@
     display: block;
     text-decoration: none;
     width: 100%;
+    padding: 5px 0;
+    color: #000;
+}
+
+.collection-movie-link:hover {
+    color: #ffffff;
+    background-color: lightseagreen;
+    text-decoration: none;
 }

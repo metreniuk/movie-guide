@@ -1,7 +1,6 @@
-import { SHOW_SEARCH_RESULTS, SET_SEARCH_FILTER, FETCH_GENRES} from '../../constants'
+import { SHOW_SEARCH_RESULTS, SET_SEARCH_FILTER, FETCH_GENRES, CLEAR_STATE } from '../../constants'
 
-const discoverReducer = (state = {}, action) => {
-  console.log(action);
+export const discover = (state = {}, action) => {
   switch (action.type) {
     case SHOW_SEARCH_RESULTS:
       return Object.assign({}, state, {
@@ -15,9 +14,9 @@ const discoverReducer = (state = {}, action) => {
       return Object.assign({}, state, {
         discoverGenres: action.genres
       });
+    case CLEAR_STATE:
+      return {};
     default:
       return state
   }
-}
-
-export default discoverReducer;
+};

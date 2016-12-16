@@ -1,4 +1,10 @@
-import { SET_SEARCH_FILTER, SHOW_SEARCH_RESULTS, API_KEY, FETCH_GENRES} from '../../constants'
+import { SET_SEARCH_FILTER, SHOW_SEARCH_RESULTS, API_KEY, FETCH_GENRES, CLEAR_STATE } from '../../constants'
+
+export const clearState = () => {
+  return (dispatch) => {
+    dispatch({type: CLEAR_STATE})
+  }
+};
 
 export const setSearchFilter = (searchFilter) => ({
     type: SET_SEARCH_FILTER,

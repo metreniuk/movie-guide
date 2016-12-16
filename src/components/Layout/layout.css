@@ -1,0 +1,37 @@
+.nav-list {
+    height: 10vh;
+    margin-bottom: 100px;
+}
+
+.nav-link {
+    font-size: 3vh;
+    color: lightseagreen;
+}
+
+.nav-list .nav-link.is-active {
+    background-color: lightseagreen;
+    color: #fff;
+}
+
+.nav-list:hover .nav-link {
+    background-color: #fff;
+    color: lightseagreen;
+}
+
+.nav-list .nav-link:hover {
+    background-color: lightseagreen;
+    color: #fff;
+}
+
+a {
+    color: lightseagreen;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+main {
+    margin: 0 100px;
+}

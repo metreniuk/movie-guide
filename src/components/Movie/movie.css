@@ -1,16 +1,24 @@
 .movie-wrapper {
-    margin: 50px 40vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .movie {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    width: 40%;
 }
 
 .movie-poster {
     width: 100%;
     height: auto;
+}
+
+.movie-trailer {
+    width: 100%;
+    height: 20vw;
 }
 
 .movie-title {
@@ -39,4 +47,10 @@
 
 .movie-description {
     margin-top: 30px;
+}
+
+.related-movies {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }

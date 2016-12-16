@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .box-list {
     display: flex;
     flex-wrap: wrap;
