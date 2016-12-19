@@ -1,9 +1,9 @@
-.nav-list {
+.wrapper .nav-list {
     height: 10vh;
     margin-bottom: 100px;
 }
 
-.nav-link {
+.wrapper .nav-link {
     font-size: 3vh;
     color: lightseagreen;
 }

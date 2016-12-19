@@ -9,52 +9,61 @@ class Discover extends Component {
     super();
     this.onSearchClick = this.onSearchClick.bind(this);
     this.onFilterClick = this.onFilterClick.bind(this);
+    this.lastQuery = 'comedy';
   }
 
-  onFetchByGenreName(name, genres = this.props.discoverGenres) {
+  onFetchByGenreName(name, lang = this.props.lang, genres = this.props.discoverGenres) {
+    console.log(genres);
     let [{ id }] = genres.filter(genre => genre.name === name.toLowerCase());
-    this.props.onFetchByGenreId(id);
+    this.props.onFetchByGenreId(id, lang);
   }
 
   onFilterClick(filter) {
     this.props.onSetFilter(filter);
   }
 
-  onSearchClick(query) {
+  onSearchClick(query = this.lastQuery, lang = this.props.lang) {
     const { onFetchByTitle, onFetchByYear, onFetchByPerson } = this.props;
     switch (this.props.discoverFilter) {
       case 'title':
-        onFetchByTitle(query);
+        onFetchByTitle(query, lang);
+        this.lastQuery = query;
         break;
       case 'genre':
-        this.onFetchByGenreName(query);
+        this.onFetchByGenreName(query, lang);
+        this.lastQuery = query;
         break;
       case 'year':
-        onFetchByYear(query);
+        onFetchByYear(query, lang);
+        this.lastQuery = query;
         break;
       case 'person':
-        onFetchByPerson(query);
+        onFetchByPerson(query, lang);
+        this.lastQuery = query;
         break;
       default:
-        onFetchByTitle(query);
+        onFetchByTitle(query, lang);
+        this.lastQuery = query;
     }
   }
 
   componentWillMount() {
-    this.props.clearState()
+    this.props.clearState();
     this.props.fetchGenres();
-  }
-
-  componentDidMount() {
-    this.props.onSetFilter('title');
+    this.props.onSetFilter('genre');
   }
 
   componentWillReceiveProps(nextProps) {
     //on redirect
     if(nextProps.discoverGenres && nextProps.location.query.genre && !nextProps.discoverResults) {
-      console.log(nextProps.discoverGenres);
+      this.props.location.search = '';
       this.props.onSetFilter('genre');
-      this.onFetchByGenreName(this.props.location.query.genre, nextProps.discoverGenres);
+      this.props.onFetchByGenreId(this.props.location.query.genre, nextProps.lang);
+    }
+
+    if (nextProps.lang !== this.props.lang) {
+      console.log(this.lastQuery);
+      this.onSearchClick(this.lastQuery, nextProps.lang);
     }
   }
 
@@ -133,26 +142,27 @@ export default connect(
   state => ({
     discoverResults: state.discover.discoverResults,
     discoverFilter: state.discover.discoverFilter,
-    discoverGenres: state.discover.discoverGenres
+    discoverGenres: state.discover.discoverGenres,
+    lang: state.language.lang
   }),
   dispatch => ({
-    onFetchByTitle: (query) => {
-      dispatch(fetchByTitle(query))
+    onFetchByTitle: (query, lang) => {
+      dispatch(fetchByTitle(query, lang))
     },
-    onFetchByGenreId: (genreId) => {
-      dispatch(fetchByGenre(genreId))
+    onFetchByGenreId: (genreId, lang) => {
+      dispatch(fetchByGenre(genreId, lang))
     },
-    onFetchByYear: (year) => {
-      dispatch(fetchByYear(year))
+    onFetchByYear: (year, lang) => {
+      dispatch(fetchByYear(year, lang))
     },
-    onFetchByPerson: (query) => {
-      dispatch(fetchByPerson(query))
+    onFetchByPerson: (query, lang) => {
+      dispatch(fetchByPerson(query, lang))
     },
     onSetFilter: (filter) => {
       dispatch(setSearchFilter(filter))
     },
-    fetchGenres: () => {
-      dispatch(fetchGenres())
+    fetchGenres: (lang) => {
+      dispatch(fetchGenres(lang))
     },
     clearState: () => {
       dispatch(clearState())

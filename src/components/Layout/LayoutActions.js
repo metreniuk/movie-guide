@@ -1,6 +1,8 @@
-import { CHANGE_LANGUAGE } from '../../constants';
+import  { CHANGE_LANGUAGE, EN } from '../../constants';
 
-export const changeLanguage = (lang) => ({
-  type: CHANGE_LANGUAGE,
-  lang
-});
+export const changeLanguage = (lang = EN) => {
+  return {
+    type: CHANGE_LANGUAGE,
+    lang
+  }
+};

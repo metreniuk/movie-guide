@@ -13,11 +13,13 @@ import Movie from '../../components/Movie';
 import { discover } from '../../components/Discover/DiscoverReducer';
 import { collections } from '../../components/Collections/CollectionReducer';
 import { movie } from '../../components/Movie/MovieReducer';
+import { language } from '../../components/Layout/LayoutReducer';
 
 const reducer = combineReducers({
   discover,
   collections,
-  movie
+  movie,
+  language
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

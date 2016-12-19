@@ -20,3 +20,9 @@ export const SHOW_MOVIE_TRAILER = 'SHOW_MOVIE_TRAILER';
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 
 export const CLEAR_STATE = 'CLEAR_STATE';
+
+export const EN = 'en';
+
+export const RU = 'ru';
+
+export const RO = 'ro';

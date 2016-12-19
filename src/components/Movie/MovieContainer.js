@@ -7,9 +7,18 @@ import { fetchMovieById, fetchMovieVideoById, clearState } from './MovieActions'
 class Movie extends Component {
   componentWillMount() {
     this.props.clearState();
-    let id = this.props.params.movieId;
-    this.props.onFetchMovieById(id);
+    this.id = this.props.params.movieId;
+    this.props.onFetchMovieById(this.id, this.props.lang);
     //this.props.onFetchMovieVideoById(id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.lang !== this.props.lang) {
+      console.log(nextProps.lang);
+      this.props.clearState();
+      this.props.onFetchMovieById(this.id, nextProps.lang);
+    }
+
   }
 
   render() {
@@ -29,8 +38,8 @@ class Movie extends Component {
             <h2 className="movie-title">{movie.title}</h2>
             <div className="movie-genre">
               <div className="movie-genre-list">
-                {movie.genres.map(({ name }) => (
-                  <Link key={name} to={`/discover?genre=${name.toLowerCase()}`} className="movie-genre-link">{name}</Link>
+                {movie.genres.map(({ name, id }) => (
+                  <Link key={name} to={`/discover?genre=${id}`} className="movie-genre-link">{name}</Link>
                 ))}
               </div>
             </div>
@@ -40,7 +49,7 @@ class Movie extends Component {
 
           </div>
         </div>
-      )
+      );
     else return null;
   }
 }
@@ -48,11 +57,12 @@ class Movie extends Component {
 export default connect(
   state => ({
     movie: state.movie.movieDetails,
-    trailerKey: state.movie.trailerKey
+    trailerKey: state.movie.trailerKey,
+    lang: state.language.lang
   }),
   dispatch => ({
-    onFetchMovieById: (id) => {
-      dispatch(fetchMovieById(id))
+    onFetchMovieById: (id, lang) => {
+      dispatch(fetchMovieById(id, lang))
     },
     onFetchMovieVideoById: (id) => {
       dispatch(fetchMovieVideoById(id))

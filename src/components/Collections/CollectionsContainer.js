@@ -6,11 +6,22 @@ import { fetchPopularCollection, fetchInTheatreCollection, fetchTopRatedCollecti
 
 class Collections extends Component {
 
+  fetchAll(lang) {
+    this.props.fetchPopularCollection(lang);
+    this.props.fetchInTheatreCollection(lang);
+    this.props.fetchTopRatedCollection(lang);
+  }
+
   componentWillMount() {
     this.props.clearState();
-    this.props.fetchPopularCollection();
-    this.props.fetchInTheatreCollection();
-    this.props.fetchTopRatedCollection();
+    this.fetchAll(this.props.lang);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.lang !== this.props.lang) {
+      console.log(nextProps.lang);
+      this.fetchAll(nextProps.lang);
+    }
   }
 
   render() {
@@ -30,17 +41,18 @@ export default connect(
   state => ({
     popularCollectionList: state.collections.popularCollectionList,
     inTheatreCollectionList: state.collections.inTheatreCollectionList,
-    topRatedCollectionList: state.collections.topRatedCollectionList
+    topRatedCollectionList: state.collections.topRatedCollectionList,
+    lang: state.language.lang
   }),
   dispatch => ({
-    fetchPopularCollection: () => {
-      dispatch(fetchPopularCollection())
+    fetchPopularCollection: (lang) => {
+      dispatch(fetchPopularCollection(lang))
     },
-    fetchInTheatreCollection: () => {
-      dispatch(fetchInTheatreCollection())
+    fetchInTheatreCollection: (lang) => {
+      dispatch(fetchInTheatreCollection(lang))
     },
-    fetchTopRatedCollection: () => {
-      dispatch(fetchTopRatedCollection())
+    fetchTopRatedCollection: (lang) => {
+      dispatch(fetchTopRatedCollection(lang))
     },
     clearState: () => {
       dispatch(clearState())

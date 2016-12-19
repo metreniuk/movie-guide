@@ -17,9 +17,9 @@ export const showSearchResults = (searchResults) => ({
   }
 );
 
-export const fetchGenres = () => {
+export const fetchGenres = (lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
+    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=${lang}`)
       .then(res => res.json())
       .then(({ genres }) => {
         genres = genres.map(({id, name}) => ({id, name: name.toLowerCase()}));
@@ -31,9 +31,9 @@ export const fetchGenres = () => {
   }
 };
 
-export const fetchByTitle = (query) => {
+export const fetchByTitle = (query, lang) => {
   return (dispatch) => {
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=${lang}&query=${query}&page=1&include_adult=false`)
           .then(res => res.json())
           .then(({results}) => {
             let searchResults = results.map(({id, poster_path, title}) => (
@@ -49,9 +49,9 @@ export const fetchByTitle = (query) => {
   }
 };
 
-export const fetchByGenre = (genreId) => {
+export const fetchByGenre = (genreId, lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}`)
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=${lang}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}`)
       .then(res => res.json())
       .then(({results}) => {
         let searchResults = results.map(({id, poster_path, title}) => (
@@ -67,9 +67,9 @@ export const fetchByGenre = (genreId) => {
   }
 };
 
-export const fetchByYear = (year) => {
+export const fetchByYear = (year, lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=${year}`)
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=${lang}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&year=${year}`)
       .then(res => res.json())
       .then(({results}) => {
         let searchResults = results.map(({id, poster_path, title}) => (
@@ -85,9 +85,9 @@ export const fetchByYear = (year) => {
   }
 };
 
-export const fetchByPerson = (query) => {
+export const fetchByPerson = (query, lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
+    fetch(`https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=${lang}&query=${query}&page=1&include_adult=false`)
       .then(res => res.json())
       .then(({results}) => {
         let searchResults = []

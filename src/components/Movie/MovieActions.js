@@ -10,9 +10,10 @@ export const showMovieTrailer = (key) => ({
   key
 });
 
-export const fetchMovieById = (movieId, lang = '') => {
+export const fetchMovieById = (movieId, lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
+    console.log(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=${lang}`)
+    fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=${lang}`)
       .then(res => res.json())
       .then(({id, poster_path, title, genres, overview}) => {
       let movie = {
@@ -28,9 +29,9 @@ export const fetchMovieById = (movieId, lang = '') => {
   }
 };
 
-export const fetchMovieVideoById = (movieId) => {
+export const fetchMovieVideoById = (movieId, lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`)
+    fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}&language=${lang}`)
       .then(res => res.json())
       .then(({results}) => {
         let { key } = results[0];

@@ -24,9 +24,9 @@ export const showTopRatedCollection = (topRatedCollectionList) => ({
   }
 );
 
-export const fetchPopularCollection = () => {
+export const fetchPopularCollection = (lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=${lang}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
       .then(res => res.json())
       .then(({results}) => {
         results = results.map(({id, title}) => (
@@ -41,9 +41,9 @@ export const fetchPopularCollection = () => {
   }
 };
 
-export const fetchInTheatreCollection = () => {
+export const fetchInTheatreCollection = (lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2016-11-15&primary_release_date.lte=2016-12-14`)
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=${lang}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2016-11-15&primary_release_date.lte=2016-12-14`)
       .then(res => res.json())
       .then(({results}) => {
         results = results.map(({id, title}) => (
@@ -58,9 +58,9 @@ export const fetchInTheatreCollection = () => {
   }
 };
 
-export const fetchTopRatedCollection = () => {
+export const fetchTopRatedCollection = (lang) => {
   return (dispatch) => {
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&vote_count.gte=3000`)
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=${lang}&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&vote_count.gte=3000`)
       .then(res => res.json())
       .then(({results}) => {
         results = results.map(({id, title}) => (

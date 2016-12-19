@@ -1,31 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import '../Navigation/navigation.css';
 import './layout.css';
+import { changeLanguage } from './LayoutActions';
+import { EN, RU, RO } from '../../constants';
 
 class Layout extends React.Component {
   constructor(props) {
     super(props);
+    this.changeLanguage = this.props.onChangeLanguage.bind(this);
+  }
+
+  componentWillMount() {
+    this.changeLanguage(EN);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.lang !== this.props.lang)
+      this.lang = this.props.lang
   }
 
   render() {
-    return (
-      <div className="wrapper">
-        <nav>
-          <div className="nav-list">
-            <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to="/discover">Discover</Link></div>
-            <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to="/collections">Collections</Link></div>
-            <div className="lang-bar">
-              <button className="lang-btn">en</button>
-              <button className="lang-btn">ro</button>
-              <button className="lang-btn">ru</button>
+    console.log(polyglot);
+    let languageBtns = [EN, RU, RO];
+      return (
+        <div className="wrapper">
+          <nav>
+            <div className="nav-list">
+              <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to={`/discover`}>Discover</Link></div>
+              <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to={`/collections`}>Collections</Link></div>
+              <div className="lang-bar">
+                {languageBtns.map(btn => (
+                  <LanguageBtn key={btn} changeLanguage={this.changeLanguage} lang={btn} />
+                ))}
+              </div>
             </div>
-          </div>
-        </nav>
-        <main>{this.props.children}</main>
-      </div>
-    )
+          </nav>
+          <main>{this.props.children}</main>
+        </div>
+      );
   }
 }
 
-export default Layout;
+const LanguageBtn = ({changeLanguage, lang}) => {
+  return (
+  <button className="lang-btn" onClick={() => changeLanguage(lang)}>{lang}</button>
+  )
+}
+
+export default connect(
+  state => ({
+    lang: state.language.lang
+  }),
+  dispatch => ({
+    onChangeLanguage: (lang) => {
+      dispatch(changeLanguage(lang))
+    }
+  })
+)(Layout);
