@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import CollectionList from './CollectionList'
 import '../General/general.css';
 import { fetchPopularCollection, fetchInTheatreCollection, fetchTopRatedCollection, clearState } from './CollectionActions';
+import translations from '../../translations';
 
 class Collections extends Component {
 
@@ -25,15 +26,18 @@ class Collections extends Component {
   }
 
   render() {
-    let popular = {title: 'Popular', data: this.props.popularCollectionList};
-    let inTheatre = {title: 'In Theatre', data: this.props.inTheatreCollectionList};
-    let topRated = {title: 'Top Rated', data: this.props.topRatedCollectionList};
-    let collections = this.props.popularCollectionList ? [popular, inTheatre , topRated ] : [];
-    return (
-      <div>
-        <CollectionList collections={collections} />
-      </div>
-    )
+    let lang = this.props.lang;
+    if (lang) {
+      let popular = {title: translations[lang].collections.headings.popular, data: this.props.popularCollectionList};
+      let inTheatre = {title: translations[lang].collections.headings.inTheatre, data: this.props.inTheatreCollectionList};
+      let topRated = {title: translations[lang].collections.headings.topRated, data: this.props.topRatedCollectionList};
+      let collections = this.props.popularCollectionList ? [popular, inTheatre , topRated ] : [];
+      return (
+        <div>
+          <CollectionList collections={collections} />
+        </div>
+      )
+    }
   }
 }
 

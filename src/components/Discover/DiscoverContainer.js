@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import './discover.css';
 import { connect } from 'react-redux';
 import { fetchByTitle, fetchByGenre, fetchByYear, fetchByPerson, setSearchFilter, fetchGenres, clearState } from './DiscoverActions';
+import translations from '../../translations';
+import {IMG_BASE_LINK, IMG_SIZE } from '../../constants';
 
 class Discover extends Component {
   constructor() {
@@ -68,34 +70,41 @@ class Discover extends Component {
   }
 
   render() {
-    return (
-      <div className="discover">
-        <SearchBar onSearchClick={this.onSearchClick}
-                   onFilterClick={this.onFilterClick}
-                   discoverFilter={this.props.discoverFilter}
-        />
-        <MovieList movies={this.props.discoverResults} />
-      </div>
-    )
+    let lang = this.props.lang;
+    if (lang) {
+      let filters = [translations[lang].discover.searchBar.filters.title, translations[lang].discover.searchBar.filters.genre, translations[lang].discover.searchBar.filters.year, translations[lang].discover.searchBar.filters.person];
+      let searchBtn = translations[lang].discover.searchBar.searchBtn;
+      return (
+        <div className="discover">
+          <SearchBar onSearchClick={this.onSearchClick}
+                     onFilterClick={this.onFilterClick}
+                     discoverFilter={this.props.discoverFilter}
+                     filters={filters}
+                     searchBtn={searchBtn}
+
+          />
+          <MovieList movies={this.props.discoverResults} />
+        </div>)
+    }
   }
 }
 
-const SearchBar = ({onSearchClick, onFilterClick, discoverFilter}) => (
+const SearchBar = ({onSearchClick, onFilterClick, discoverFilter, filters, searchBtn}) => (
   <div className="search-bar">
-    <SearchField onSearchClick={onSearchClick} />
-    <SearchFilter onFilterClick={onFilterClick} discoverFilter={discoverFilter}/>
+    <SearchField onSearchClick={onSearchClick} searchBtn={searchBtn} />
+    <SearchFilter onFilterClick={onFilterClick} discoverFilter={discoverFilter} filters={filters}/>
   </div>
 );
 
-const SearchFilter = ({ onFilterClick , discoverFilter}) => {
-  let filters = ['title', 'genre', 'year', 'person']
+const SearchFilter = ({ onFilterClick , discoverFilter, filters}) => {
   return (
     <div className="search-filter">
       {filters.map((filter) => {
         return <FilterLink key={filter} filter={filter} onFilterClick={onFilterClick} isActive={discoverFilter === filter ? 'is-active': ''}/>
       })}
     </div>
-  )};
+  )
+};
 
 const FilterLink = ({filter, onFilterClick, isActive}) => (
   <div className="search-filter-item">
@@ -107,25 +116,23 @@ const FilterLink = ({filter, onFilterClick, isActive}) => (
   </div>
 )
 
-const SearchField = ({onSearchClick}) => {
+const SearchField = ({onSearchClick, searchBtn}) => {
   let searchInput;
   return (
     <div className="search-field">
       <input className="input search-field-input" type="text" ref={input => searchInput = input}/>
-      <button className="btn search-field-btn" onClick={() => onSearchClick(searchInput.value)}>Search</button>
+      <button className="btn search-field-btn" onClick={() => onSearchClick(searchInput.value)}>{searchBtn}</button>
     </div>
   )
 };
 
 const MovieList = (props) => {
   let movies = props.movies ? props.movies : [];
-  let imgBaseLink= 'http://image.tmdb.org/t/p/';
-  let size = 'w185';
   return (
     <div className="box-list movie-list">
       {movies.map(movie => (
         <Link to={`/movie/${movie.id}`} key={movie.id} className="box-item movie-item">
-          <img className="movie-poster" src={imgBaseLink.concat(size, movie.poster_path)} alt={movie.title}/>
+          <img className="movie-poster" src={IMG_BASE_LINK.concat(IMG_SIZE, movie.poster_path)} alt={movie.title}/>
           <p className="movie-title">{movie.title}</p>
         </Link>
       ))}

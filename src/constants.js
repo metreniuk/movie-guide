@@ -17,9 +17,15 @@ export const SHOW_MOVIE_PAGE = 'SHOW_MOVIE_PAGE';
 
 export const SHOW_MOVIE_TRAILER = 'SHOW_MOVIE_TRAILER';
 
+export const SHOW_SIMILAR_MOVIES = 'SHOW_SIMILAR_MOVIES';
+
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 
 export const CLEAR_STATE = 'CLEAR_STATE';
+
+export let IMG_BASE_LINK = 'http://image.tmdb.org/t/p/';
+
+export let IMG_SIZE = 'original';
 
 export const EN = 'en';
 

@@ -5,6 +5,7 @@ import '../Navigation/navigation.css';
 import './layout.css';
 import { changeLanguage } from './LayoutActions';
 import { EN, RU, RO } from '../../constants';
+import translations from '../../translations';
 
 class Layout extends React.Component {
   constructor(props) {
@@ -22,14 +23,15 @@ class Layout extends React.Component {
   }
 
   render() {
-    console.log(polyglot);
     let languageBtns = [EN, RU, RO];
+    let lang = this.props.lang;
+    if (lang) {
       return (
         <div className="wrapper">
           <nav>
             <div className="nav-list">
-              <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to={`/discover`}>Discover</Link></div>
-              <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to={`/collections`}>Collections</Link></div>
+              <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to='/discover'>{translations[lang].nav.navLinks.discover}</Link></div>
+              <div className="nav-item"><Link className="nav-link" activeClassName="is-active" to='/collections'>{translations[lang].nav.navLinks.collections}</Link></div>
               <div className="lang-bar">
                 {languageBtns.map(btn => (
                   <LanguageBtn key={btn} changeLanguage={this.changeLanguage} lang={btn} />
@@ -39,13 +41,14 @@ class Layout extends React.Component {
           </nav>
           <main>{this.props.children}</main>
         </div>
-      );
+      )}
+    else return null
   }
 }
 
 const LanguageBtn = ({changeLanguage, lang}) => {
   return (
-  <button className="lang-btn" onClick={() => changeLanguage(lang)}>{lang}</button>
+  <button className="btn lang-btn" onClick={() => changeLanguage(lang)}>{lang}</button>
   )
 }
 

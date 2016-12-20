@@ -1,4 +1,4 @@
-import { API_KEY, SHOW_MOVIE_PAGE, SHOW_MOVIE_TRAILER, CLEAR_STATE } from '../../constants';
+import { API_KEY, SHOW_MOVIE_PAGE, SHOW_MOVIE_TRAILER, SHOW_SIMILAR_MOVIES, CLEAR_STATE } from '../../constants';
 
 export const showMoviePage = (movieDetails) => ({
   type: SHOW_MOVIE_PAGE,
@@ -10,9 +10,13 @@ export const showMovieTrailer = (key) => ({
   key
 });
 
+export const showSimilarMovies = (similarMovies) => ({
+  type: SHOW_SIMILAR_MOVIES,
+  similarMovies
+});
+
 export const fetchMovieById = (movieId, lang) => {
   return (dispatch) => {
-    console.log(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=${lang}`)
     fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=${lang}`)
       .then(res => res.json())
       .then(({id, poster_path, title, genres, overview}) => {
@@ -24,7 +28,8 @@ export const fetchMovieById = (movieId, lang) => {
         overview
       };
       dispatch(showMoviePage(movie));
-      dispatch(fetchMovieVideoById(movieId));
+      dispatch(fetchMovieVideoById(movieId, lang));
+      dispatch(fetchSimilarMovies(movieId, lang))
       }).catch(e => e.message)
   }
 };
@@ -36,6 +41,22 @@ export const fetchMovieVideoById = (movieId, lang) => {
       .then(({results}) => {
         let { key } = results[0];
         dispatch(showMovieTrailer(key));
+      }).catch(e => e.message)
+  }
+};
+
+export const fetchSimilarMovies = (movieId, lang) => {
+  return (dispatch) => {
+    fetch(`https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${API_KEY}&language=${lang}&page=1`)
+      .then(res => res.json())
+      .then(({results}) => {
+        let movies = results.map(movie => ({
+          id: movie.id,
+          title: movie.title,
+          poster_path: movie.poster_path
+        }));
+        console.log(movies);
+        dispatch(showSimilarMovies(movies))
       }).catch(e => e.message)
   }
 };

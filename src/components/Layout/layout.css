@@ -1,5 +1,18 @@
+a {
+    color: lightseagreen;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+main {
+    margin: 0 100px;
+}
+
 .wrapper .nav-list {
-    height: 10vh;
+    height: 12vh;
     margin-bottom: 100px;
 }
 
@@ -23,15 +36,15 @@
     color: #fff;
 }
 
-a {
-    color: lightseagreen;
-    text-decoration: none;
+.lang-bar {
+    display: flex;
+    align-self: flex-end;
+    width: 150px;
+    justify-content: space-between;
+    margin: 5px 300px 0;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-main {
-    margin: 0 100px;
+.lang-btn {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

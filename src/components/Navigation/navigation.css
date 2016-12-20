@@ -22,5 +22,6 @@
     text-decoration: none;
     font-size: 5vh;
     width: 100%;
+    text-transform: capitalize;
 }
 
